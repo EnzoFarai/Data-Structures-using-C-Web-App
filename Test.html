@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Code Executor</title>
+</head>
+<body>
+
+    <h2>Run C Code</h2>
+    <textarea id="codeInput" rows="10" cols="50">// Enter your C code here</textarea><br>
+    <button onclick="executeCCode()">Run Code</button>
+    <h3>Output:</h3>
+    <pre id="output"></pre>
+
+    <script>
+        function executeCCode() {
+            const userCode = document.getElementById("codeInput").value;
+            
+            const requestData = {
+                script: userCode,
+                language: "c",
+                versionIndex: "0",
+                clientId: "678b4529e898562c72ebad6e6420bd58",  // Replace with your actual client ID
+                clientSecret: "662320c6e6ed61c9dc648fcaa8c54b3736a711db41bbc8cd593d91769186991e" // Replace with your actual client secret
+            };
+
+            fetch("https://api.jdoodle.com/v1/execute", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("output").innerText = data.output;
+            })
+            .catch(error => {
+                document.getElementById("output").innerText = "Error: " + error;
+            });
+        }
+    </script>
+
+</body>
+</html>
